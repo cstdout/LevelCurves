@@ -57,3 +57,45 @@ def find_intersection_points(x_min, x_max, y_min, y_max, z0, func, x_step=0.1, y
         x0 += x_step
 
     return intersection_points
+
+
+def draw_points(points):
+    fig, ax = plt.subplots(figsize=(8, 8))
+
+    x_min = -5
+    x_max = 5
+    y_min = -5
+    y_max = 5
+
+    # Set limits
+    ax.set_xlim(x_min, x_max)
+    ax.set_ylim(y_min, y_max)
+
+    # Grid
+    ax.grid(True, linestyle="--", color="lightgray")
+
+    # X-axis with arrow
+    ax.annotate("", xy=(x_max, 0), xytext=(x_min, 0), arrowprops=dict(arrowstyle="->",
+                                                                      color="black",
+                                                                      linewidth=1.5))
+
+    # Y-axis with arrow
+    ax.annotate("", xy=(0, y_max), xytext=(0, y_min), arrowprops=dict(arrowstyle="->",
+                                                                      color="black",
+                                                                      linewidth=1.5))
+
+    # Axis labels
+    ax.text(x_max - 0.5, 0.4, "X", fontsize=14)
+    ax.text(0.4, y_max - 0.5, "Y", fontsize=14)
+
+    # Ticks
+    ax.set_xticks(range(x_min, x_max + 1))
+    ax.set_yticks(range(y_min, y_max + 1))
+
+    for p in points:
+        ax.scatter(p[0], p[1], color="red", s=2, zorder=5)
+
+    # Equal proportions
+    ax.set_aspect("equal")
+
+    plt.show()
