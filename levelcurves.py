@@ -1,4 +1,7 @@
 import matplotlib.pyplot as plt
+from math import sin, cos
+
+
 def my_func(x, y):
     return (x ** 2) + (x * y) + (y ** 2)
     # return ((x * y) ** 3) + x * y
