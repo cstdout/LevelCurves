@@ -39,3 +39,21 @@ def solver(x0, z0, y_min, y_max, func, is_increasing=False):
         else:
             R = mid
     return mid
+
+
+def find_intersection_points(x_min, x_max, y_min, y_max, z0, func, x_step=0.1, y_step=0.5):
+    intersection_points = []
+
+    x0 = x_min
+    EPS = 1e-6
+
+    change_sign_intervals = []
+    while x0 < x_max:
+        change_sign_intervals = get_intervals_where_function_changes_its_sign(x0, y_min, y_max, y_step, z0, func)
+        for interval in change_sign_intervals:
+            y = solver(x0, z0, interval[0], interval[1], func, interval[2])
+            if abs(function_at_level(x0, y, z0, func)) <= EPS:
+                intersection_points.append((x0, y))
+        x0 += x_step
+
+    return intersection_points
