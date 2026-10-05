@@ -8,6 +8,7 @@ def function_at_level(x, y, z0, func):
     return func(x, y) - z0
 
 
+# TODO return roots
 def get_intervals_where_function_changes_its_sign(x0, y_min, y_max, y_step, z0, func):
     EPS = 1e-6
     intervals = []
@@ -99,3 +100,8 @@ def draw_points(points):
     ax.set_aspect("equal")
 
     plt.show()
+
+
+if __name__ == "__main__":
+    points = find_intersection_points(-5, 5, -5, 5, 0.5, my_func)
+    draw_points(points)
