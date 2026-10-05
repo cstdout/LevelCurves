@@ -24,3 +24,18 @@ def get_intervals_where_function_changes_its_sign(x0, y_min, y_max, y_step, z0, 
         prev_val = current_val
         y0 += y_step
     return intervals
+
+
+def solver(x0, z0, y_min, y_max, func, is_increasing=False):
+    L = y_min
+    R = y_max
+    EPS = 1e-6
+    mid = 0
+    while abs(L - R) > EPS:
+        mid = (L + (R - L) / 2.0)
+        val = function_at_level(x0, mid, z0, func)
+        if is_increasing and val < 0 or not is_increasing and val > 0:
+            L = mid
+        else:
+            R = mid
+    return mid
