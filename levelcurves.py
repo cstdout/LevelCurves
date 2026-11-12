@@ -12,7 +12,6 @@ def function_at_level(x, y, z0, func):
     return func(x, y) - z0
 
 
-# TODO: return roots
 def get_intervals_where_function_changes_its_sign(x0, y_min, y_max, y_step, z0, func):
     EPS = 1e-6
     intervals = []
