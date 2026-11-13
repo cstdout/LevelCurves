@@ -1,11 +1,14 @@
 import matplotlib.pyplot as plt
+from point import distance, Point
 from math import sin, cos
+
+from dbscan import dbscan
 
 
 def my_func(x, y):
-    return (x ** 2) + (x * y) + (y ** 2)
+    # return (x ** 2) + (x * y) + (y ** 2)
     # return ((x * y) ** 3) + x * y
-    # return cos(x) * sin(y)
+    return cos(x) * sin(y)
 
 
 def function_at_level(x, y, z0, func):
@@ -63,7 +66,7 @@ def find_intersection_points(x_min, x_max, y_min, y_max, z0, func, x_step=0.1, y
     return intersection_points
 
 
-def draw_points(points):
+def draw_points(points, clusters):
     fig, ax = plt.subplots(figsize=(8, 8))
 
     x_min = -5
@@ -96,8 +99,22 @@ def draw_points(points):
     ax.set_xticks(range(x_min, x_max + 1))
     ax.set_yticks(range(y_min, y_max + 1))
 
-    for p in points:
-        ax.scatter(p[0], p[1], color="red", s=2, zorder=5)
+    for p, c in zip(points, clusters):
+        if c > -1:
+            color = ""
+            if c == 0:
+                color = "red"
+            elif c == 1:
+                color = "blue"
+            elif c == 2:
+                color = "green"
+            elif c == 3:
+                color = "cyan"
+            elif c == 4:
+                color = "magenta"
+            elif c == 5:
+                color = "black"
+            ax.scatter(p[0], p[1], color=color, s=2, zorder=5)
 
     # Equal proportions
     ax.set_aspect("equal")
@@ -107,4 +124,8 @@ def draw_points(points):
 
 if __name__ == "__main__":
     points = find_intersection_points(-5, 5, -5, 5, 0.5, my_func)
-    draw_points(points)
+    pts = []
+    for p in points:
+        pts.append(Point(p[0], p[1]))
+    clusters = dbscan(all_points=pts, eps=1.0, min_pts=2)
+    draw_points(points, clusters)
